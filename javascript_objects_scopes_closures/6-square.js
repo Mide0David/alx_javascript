@@ -1,3 +1,4 @@
+#!/usr/bin/node
 const oldSquare = require("./5-square");
 
 class Square extends oldSquare{
