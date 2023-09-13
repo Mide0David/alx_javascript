@@ -1,5 +1,4 @@
 const request = require('request');
-
 const args = process.argv;
 
 if (args.length < 3) {
@@ -14,6 +13,5 @@ request.get(url, (error, response) => {
     console.error('Error:', error);
     return;
   }
-
-  console.log('Code:', response.statusCode);
+  console.log('Code: ', response.statusCode);
 });
