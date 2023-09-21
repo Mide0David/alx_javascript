@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cookie Management</title>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+</head>
+<body>
+  <h1>Cookies Example</h1>
+  <div id="loginForm" style="display: none;">
+    <h2>Login</h2>
+    <input type="text" id="firstname" placeholder="First Name">
+    <input type="text" id="email" placeholder="Email">
+    <button onclick="setCookiesAndShowWelcomeMessage()">Log me in</button>
+  </div>
+  <button onclick="showForm()">Show Login Form</button>
+  <button onclick="showWelcomeMessageOrForm()">Show Welcome Message or Form</button>
+
+  <script>
+    function setCookiesAndShowWelcomeMessage() {
+      var firstNameValue = document.getElementById("firstname").value;
+      var emailValue = document.getElementById("email").value;
+
+      var expirationDate = new Date();
+      expirationDate.setTime(expirationDate.getTime() + (10 * 24 * 60 * 60 * 1000)); 
+
+      Cookies.set("firstname", firstNameValue, { expires: expirationDate });
+      Cookies.set("email", emailValue, { expires: expirationDate });
+
+      showWelcomeMessageOrForm();
+    }
+
+    function showForm() {
+      var welcomeMessage = document.getElementById("welcomeMessage");
+      var loginForm = document.getElementById("loginForm");
+      
+      if (welcomeMessage) {
+        welcomeMessage.style.display = "none";
+      }
+      
+      loginForm.style.display = "block";
+    }
+
+    function deleteCookiesAndShowForm() {
+      Cookies.remove("firstname");
+      Cookies.remove("email");
+
+      showForm();
+    }
+
+    function showWelcomeMessageOrForm() {
+      var firstName = Cookies.get("firstname");
+
+      if (firstName) {
+        document.body.innerHTML = "<h1>Welcome " + firstName + " <a href='#' onclick='deleteCookiesAndShowForm(); showForm();'> (logout)</a></h1>";
+        var logoutLink = document.querySelector("a");
+        logoutLink.style.fontStyle = "italic";
+        logoutLink.style.marginLeft = "10px";
+      } else {
+        showForm();
+      }
+    }
+  </script>
+</body>
+</html>
